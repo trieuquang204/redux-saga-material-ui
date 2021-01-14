@@ -5,13 +5,8 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import { STATUSES } from "../../../constants";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-  Box,
-} from "@material-ui/core";
+
+import TaskList from "../../../components/TaskList";
 
 const listTask = [
   {
@@ -35,7 +30,6 @@ const listTask = [
 ];
 class TaskBoard extends Component {
   renderBoard() {
-    const { classes } = this.props;
     let xhtml = null;
     xhtml = (
       <Grid container spacing={2}>
@@ -44,31 +38,7 @@ class TaskBoard extends Component {
             (task) => task.status === status.value
           );
           return (
-            <Grid key={index} item={true} spacing={2} md={4} xs={12}>
-              <Box mt={2} mb={2}>
-                <div className={classes.status}>{status.label}</div>
-              </Box>
-              <div className={classes.wrapperListTask}>
-                {taskFiltered.map((task) => {
-                  const { title } = task;
-                  return (
-                    <Card key={task.id} className={classes.card}>
-                      <CardContent>
-                        <Grid container justify="space-between">
-                          <Grid item md={8}>
-                            <Typography component="h2">{title}</Typography>
-                          </Grid>
-                          <Grid item md={4}>
-                            {status.label}
-                          </Grid>
-                        </Grid>
-                      </CardContent>
-                      <CardActions></CardActions>
-                    </Card>
-                  );
-                })}
-              </div>
-            </Grid>
+            <TaskList tasks={taskFiltered} status={status} key={status.value} />
           );
         })}
       </Grid>
