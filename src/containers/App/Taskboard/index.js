@@ -1,12 +1,16 @@
 import { withStyles } from "@material-ui/styles";
 import React, { Component } from "react";
 import styles from "./styles";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import { STATUSES } from "../../../constants";
 
+import {
+  Button,
+  Grid,
+} from "@material-ui/core";
+
 import TaskList from "../../../components/TaskList";
+import TaskForm from "../../../components/TaskForm";
 
 const listTask = [
   {
@@ -29,6 +33,29 @@ const listTask = [
   },
 ];
 class TaskBoard extends Component {
+  state = {
+    open: false,
+  };
+
+  handleClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  openform = () => {
+    this.setState({
+      open: true,
+    });
+  };
+
+  renderForm() {
+    const { open } = this.state
+    let xhtml = null;
+    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
+    return xhtml;
+  }
+
   renderBoard() {
     let xhtml = null;
     xhtml = (
@@ -49,10 +76,11 @@ class TaskBoard extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={this.openform}>
           <AddIcon /> Them moi cong viec
         </Button>
         {this.renderBoard()}
+        {this.renderForm()}
       </div>
     );
   }
