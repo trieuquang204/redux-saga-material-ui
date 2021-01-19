@@ -4,10 +4,11 @@ import styles from "./styles";
 import AddIcon from "@material-ui/icons/Add";
 import { STATUSES } from "../../../constants";
 
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Box } from "@material-ui/core";
 
 import TaskList from "../../../components/TaskList";
 import TaskForm from "../../../components/TaskForm";
+import { toast } from 'react-toastify';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -43,6 +44,11 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
+  showToast = () => {
+    toast.success('Thanh cong');
+  }
+
+
   renderBoard() {
     let xhtml = null;
     const { listTask } = this.props;
@@ -67,6 +73,11 @@ class TaskBoard extends Component {
         <Button variant="contained" color="primary" onClick={this.openform}>
           <AddIcon /> Them moi cong viec
         </Button>
+        <Box>
+        <Button variant="contained" color="primary" onClick={this.showToast}>
+          thong bao
+        </Button>
+        </Box>
         {this.renderBoard()}
         {this.renderForm()}
       </div>
