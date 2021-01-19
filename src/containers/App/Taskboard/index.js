@@ -11,28 +11,8 @@ import TaskForm from "../../../components/TaskForm";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as taskActions from '../../../actions/task';
+import * as taskActions from "../../../actions/task";
 
-const listTask = [
-  {
-    id: 0,
-    title: "Read book",
-    description: "Decription ",
-    status: 0,
-  },
-  {
-    id: 1,
-    title: "Read book1",
-    description: "Decription 1",
-    status: 1,
-  },
-  {
-    id: 2,
-    title: "Read book2",
-    description: "Decription 2",
-    status: 2,
-  },
-];
 class TaskBoard extends Component {
   state = {
     open: false,
@@ -40,8 +20,8 @@ class TaskBoard extends Component {
 
   componentDidMount() {
     const { taskActionCreators } = this.props;
-    const { fetchListTask } = taskActionCreators;
-    fetchListTask();
+    const { fetchListTaskRequest } = taskActionCreators;
+    fetchListTaskRequest();
   }
 
   handleClose = () => {
@@ -65,6 +45,7 @@ class TaskBoard extends Component {
 
   renderBoard() {
     let xhtml = null;
+    const { listTask } = this.props;
     xhtml = (
       <Grid container spacing={2}>
         {STATUSES.map((status, index) => {
@@ -93,12 +74,16 @@ class TaskBoard extends Component {
   }
 }
 
-const mapStateToProps = null;
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    taskActionCreators: bindActionCreators(taskActions, dispatch)
-  }
-}
+    listTask: state.task.listTask,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+  };
+};
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(TaskBoard)
