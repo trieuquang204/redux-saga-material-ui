@@ -73,11 +73,6 @@ class TaskBoard extends Component {
         <Button variant="contained" color="primary" onClick={this.openform}>
           <AddIcon /> Them moi cong viec
         </Button>
-        <Box>
-        <Button variant="contained" color="primary" onClick={this.showToast}>
-          thong bao
-        </Button>
-        </Box>
         {this.renderBoard()}
         {this.renderForm()}
       </div>
