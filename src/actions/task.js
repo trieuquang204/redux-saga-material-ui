@@ -1,13 +1,13 @@
 import * as taskApis from "../apis/task";
 import * as taskConstants from '../constants/task';
 
-const fetchListTask = () => {
+export const fetchListTask = () => {
   return {
     type: taskConstants.FETCH_TASK,
   }
 }
 
-const fetchListTaskSuccess = (data) => {
+export const fetchListTaskSuccess = (data) => {
   return {
     type: taskConstants.FETCH_TASK_SUCCESS,
     payload: {
@@ -15,7 +15,7 @@ const fetchListTaskSuccess = (data) => {
     }
   }
 }
-const fetchListTaskFailed = (error) => {
+export const fetchListTaskFailed = (error) => {
   return {
     type: taskConstants.FETCH_TASK_FAILED,
     payload: {
@@ -29,17 +29,17 @@ const fetchListTaskFailed = (error) => {
 // B2: reset state task => rỗng []
 // B3: fetch data 
  
-export const fetchListTaskRequest = () => {
-  return (dispatch) => {
-    dispatch(fetchListTask())
-    taskApis
-      .getList()
-      .then((res) => {
-        const { data } = res;
-        dispatch(fetchListTaskSuccess(data))
-      })
-      .catch((error) => {
-        dispatch(fetchListTaskFailed(error))
-      });
-  };
-};
+// export const fetchListTaskRequest = () => {
+//   return (dispatch) => {
+//     dispatch(fetchListTask())
+//     taskApis
+//       .getList()
+//       .then((res) => {
+//         const { data } = res;
+//         dispatch(fetchListTaskSuccess(data))
+//       })
+//       .catch((error) => {
+//         dispatch(fetchListTaskFailed(error))
+//       });
+//   };
+// };
