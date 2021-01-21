@@ -8,7 +8,7 @@ import { Button, Grid, Box } from "@material-ui/core";
 
 import TaskList from "../../../components/TaskList";
 import TaskForm from "../../../components/TaskForm";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -19,11 +19,17 @@ class TaskBoard extends Component {
     open: false,
   };
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   const { taskActionCreators } = this.props;
+  //   const { fetchListTask } = taskActionCreators;
+  //   fetchListTask();
+  // }
+
+  loadData = () => {
     const { taskActionCreators } = this.props;
     const { fetchListTask } = taskActionCreators;
     fetchListTask();
-  }
+  };
 
   handleClose = () => {
     this.setState({
@@ -45,9 +51,8 @@ class TaskBoard extends Component {
   }
 
   showToast = () => {
-    toast.success('Thanh cong');
-  }
-
+    toast.success("Thanh cong");
+  };
 
   renderBoard() {
     let xhtml = null;
@@ -70,6 +75,9 @@ class TaskBoard extends Component {
     const { classes } = this.props;
     return (
       <div>
+        <Button variant="contained" color="primary" onClick={this.loadData}>
+          Load data
+        </Button>
         <Button variant="contained" color="primary" onClick={this.openform}>
           <AddIcon /> Them moi cong viec
         </Button>
