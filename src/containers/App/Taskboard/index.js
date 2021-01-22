@@ -9,10 +9,10 @@ import { Button, Grid, Box } from "@material-ui/core";
 import TaskList from "../../../components/TaskList";
 import TaskForm from "../../../components/TaskForm";
 import { toast } from "react-toastify";
-
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as taskActions from "../../../actions/task";
+import SearchBox from "../../../components/SearchBox";
 
 class TaskBoard extends Component {
   state = {
@@ -54,6 +54,15 @@ class TaskBoard extends Component {
     toast.success("Thanh cong");
   };
 
+  handleFilter = (event) => {
+    console.log(event);
+  };
+  renderSearchBox = () => {
+    let xhtml = null;
+    xhtml = <SearchBox handleChange={this.handleFilter} />;
+    return xhtml;
+  };
+
   renderBoard() {
     let xhtml = null;
     const { listTask } = this.props;
@@ -81,6 +90,7 @@ class TaskBoard extends Component {
         <Button variant="contained" color="primary" onClick={this.openform}>
           <AddIcon /> Them moi cong viec
         </Button>
+        {this.renderSearchBox()}
         {this.renderBoard()}
         {this.renderForm()}
       </div>
