@@ -13,7 +13,7 @@ class TaskList extends Component {
           <div className={classes.status}>{status.label}</div>
         </Box>
         <div className={classes.wrapperListTask}>
-          {tasks.map((task) => {
+          {tasks && tasks.map((task) => {
             return <TaskItem task={task} status={status} key={task.id} />;
           })}
         </div>

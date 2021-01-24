@@ -1,34 +1,33 @@
 import * as taskApis from "../apis/task";
-import * as taskConstants from '../constants/task';
+import * as taskConstants from "../constants/task";
 
 export const fetchListTask = () => {
   return {
     type: taskConstants.FETCH_TASK,
-  }
-}
+  };
+};
 
 export const fetchListTaskSuccess = (data) => {
   return {
     type: taskConstants.FETCH_TASK_SUCCESS,
     payload: {
-      data
-    }
-  }
-}
+      data,
+    },
+  };
+};
 export const fetchListTaskFailed = (error) => {
   return {
     type: taskConstants.FETCH_TASK_FAILED,
     payload: {
-      error
-    }
-  }
-}
-
+      error,
+    },
+  };
+};
 
 // B1: fetchListTaskRequest
 // B2: reset state task => rỗng []
-// B3: fetch data 
- 
+// B3: fetch data
+
 // export const fetchListTaskRequest = () => {
 //   return (dispatch) => {
 //     dispatch(fetchListTask())
@@ -43,3 +42,17 @@ export const fetchListTaskFailed = (error) => {
 //       });
 //   };
 // };
+
+export const filterTask = (keyword) => {
+  return {
+    type: taskConstants.FILTER_TASK,
+    payload: keyword,
+  };
+};
+
+export const filterTaskSuccess = (data) => {
+  return {
+    type: taskConstants.FILTER_TASK_SUCCESS,
+    payload: data,
+  };
+};

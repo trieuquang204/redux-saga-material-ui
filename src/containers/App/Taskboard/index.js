@@ -19,11 +19,11 @@ class TaskBoard extends Component {
     open: false,
   };
 
-  // componentDidMount() {
-  //   const { taskActionCreators } = this.props;
-  //   const { fetchListTask } = taskActionCreators;
-  //   fetchListTask();
-  // }
+  componentDidMount() {
+    const { taskActionCreators } = this.props;
+    const { fetchListTask } = taskActionCreators;
+    fetchListTask();
+  }
 
   loadData = () => {
     const { taskActionCreators } = this.props;
@@ -55,7 +55,10 @@ class TaskBoard extends Component {
   };
 
   handleFilter = (event) => {
-    console.log(event);
+    const { value } = event.target;
+    const { taskActionCreators } = this.props;
+    const { filterTask } = taskActionCreators;
+    filterTask(value);
   };
   renderSearchBox = () => {
     let xhtml = null;
@@ -69,7 +72,7 @@ class TaskBoard extends Component {
     xhtml = (
       <Grid container spacing={2}>
         {STATUSES.map((status, index) => {
-          const taskFiltered = listTask.filter(
+          const taskFiltered = listTask && listTask.filter(
             (task) => task.status === status.value
           );
           return (
