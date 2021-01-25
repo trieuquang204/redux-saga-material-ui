@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as taskActions from "../../../actions/task";
+import * as modalActions from "../../../actions/modal";
 import SearchBox from "../../../components/SearchBox";
 
 class TaskBoard extends Component {
@@ -38,9 +39,15 @@ class TaskBoard extends Component {
   };
 
   openform = () => {
-    this.setState({
-      open: true,
-    });
+    const { modalActionCreators } = this.props;
+    console.log("modalActions", modalActions);
+    const {
+      showModal,
+      changeModalTitle,
+      changeModalContent,
+    } = modalActionCreators;
+    showModal();
+    changeModalTitle("Them moi cong viec");
   };
 
   renderForm() {
@@ -72,9 +79,8 @@ class TaskBoard extends Component {
     xhtml = (
       <Grid container spacing={2}>
         {STATUSES.map((status, index) => {
-          const taskFiltered = listTask && listTask.filter(
-            (task) => task.status === status.value
-          );
+          const taskFiltered =
+            listTask && listTask.filter((task) => task.status === status.value);
           return (
             <TaskList tasks={taskFiltered} status={status} key={status.value} />
           );
@@ -109,6 +115,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     taskActionCreators: bindActionCreators(taskActions, dispatch),
+    modalActionCreators: bindActionCreators(modalActions, dispatch),
   };
 };
 

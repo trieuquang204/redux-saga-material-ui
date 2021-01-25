@@ -30,7 +30,7 @@ function* watchFetchListTaskAction() {
       // dispatch action fietlistTaskFailed
       yield put(fetchListTaskFailed(error));
     }
-    yield delay(1000);
+    // yield delay(1000);
     yield put(hideLoading());
   }
 }

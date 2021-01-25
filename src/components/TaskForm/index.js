@@ -19,6 +19,35 @@ class TaskForm extends Component {
     return (
       <Modal open={open} onClose={onClose}>
         <div className={classes.modal}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <b
+              style={{
+                background: "yellow",
+                padding: "10px",
+                cursor: "pointer",
+                zIndex: "9",
+              }}
+            >
+              Thêm mới
+            </b>
+            <b
+              style={{
+                background: "yellow",
+                padding: "10px",
+                cursor: "pointer",
+                zIndex: "9",
+              }}
+              onClick={onClose}
+            >
+              Đóng
+            </b>
+          </div>
           <form>
             <Grid container spacing={8}>
               <Grid item md={12}>
