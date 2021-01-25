@@ -8,6 +8,7 @@ import {
   DialogContentText,
   TextField,
   DialogTitle,
+  Modal,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import styles from "./styles";
@@ -16,40 +17,34 @@ class TaskForm extends Component {
   render() {
     const { open, classes, onClose } = this.props;
     return (
-      <Dialog
-        open={open}
-        keepMounted
-        onClose={onClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          Them moi cong viec
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            className={classes.textField}
-            margin="normal"
-          />
-          <TextField
-            multiline
-            id="standard-password-input"
-            label="Password"
-            className={classes.textField}
-            margin="normal"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose} color="primary">
-            cancel
-          </Button>
-          <Button onClick={onClose} color="primary">
-            ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Modal open={open} onClose={onClose}>
+        <div className={classes.modal}>
+          <form>
+            <Grid container spacing={8}>
+              <Grid item md={12}>
+                <TextField
+                  id="standard-password-input"
+                  label="Tieu de"
+                  className={classes.textField}
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item md={12}>
+                <TextField
+                  id="standard-password-input"
+                  label="Mo ta"
+                  className={classes.textField}
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item md={12}>
+                <Button color="primary">Luu lai</Button>
+                <Button onClick={onClose}>Huy bo</Button>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Modal>
     );
   }
 }
