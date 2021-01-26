@@ -7,7 +7,7 @@ import { STATUSES } from "../../../constants";
 import { Button, Grid, Box } from "@material-ui/core";
 
 import TaskList from "../../../components/TaskList";
-import TaskForm from "../../../components/TaskForm";
+import TaskForm from "../../TaskForm";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -40,22 +40,23 @@ class TaskBoard extends Component {
 
   openform = () => {
     const { modalActionCreators } = this.props;
-    console.log("modalActions", modalActions);
     const {
       showModal,
       changeModalTitle,
       changeModalContent,
     } = modalActionCreators;
+
     showModal();
     changeModalTitle("Them moi cong viec");
+    changeModalContent(<TaskForm />);
   };
 
-  renderForm() {
-    const { open } = this.state;
-    let xhtml = null;
-    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-    return xhtml;
-  }
+  // renderForm() {
+  //   const { open } = this.state;
+  //   let xhtml = null;
+  //   xhtml = <TaskForm open={open} onClose={this.handleClose} />;
+  //   return xhtml;
+  // }
 
   showToast = () => {
     toast.success("Thanh cong");
@@ -101,7 +102,7 @@ class TaskBoard extends Component {
         </Button>
         {this.renderSearchBox()}
         {this.renderBoard()}
-        {this.renderForm()}
+        {/* {this.renderForm()} */}
       </div>
     );
   }

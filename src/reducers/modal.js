@@ -28,6 +28,7 @@ const reducer = (state = initialState, action) => {
       };
     }
     case types.CHANGE_MODAL_CONTENT: {
+      const component = action.payload;
       return {
         ...state,
         component: component,
