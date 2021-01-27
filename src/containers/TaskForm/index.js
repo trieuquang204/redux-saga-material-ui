@@ -14,15 +14,23 @@ import {
   Modal,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
+import { Field, reduxForm } from "redux-form";
 import styles from "./styles";
 
 class TaskForm extends Component {
+  onHandleSubmitForm = (data) => {
+    console.log("data", data);
+  };
+
   render() {
-    const { classes, modalActions } = this.props;
+    const { classes, modalActions, handleSubmit } = this.props;
     const { hideModal } = modalActions;
     return (
-      <form>
+      <form onSubmit={handleSubmit(this.onHandleSubmitForm)}>
         <Grid container spacing={8}>
+          <Grid item md={12}>
+            <Field name="title" component="input" />
+          </Grid>
           <Grid item md={12}>
             <TextField
               id="standard-password-input"
@@ -40,7 +48,9 @@ class TaskForm extends Component {
             />
           </Grid>
           <Grid item md={12}>
-            <Button color="primary">Luu lai</Button>
+            <Button color="primary" type="submit">
+              Luu lai
+            </Button>
             <Button onClick={hideModal}>Huy bo</Button>
           </Grid>
         </Grid>
@@ -57,6 +67,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+const FORM_NAME = "TASK_MANAGEMENT";
+
+const withReduxForm = reduxForm({
+  form: FORM_NAME,
+});
+
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withStyles(styles), withConnect)(TaskForm);
+export default compose(
+  withStyles(styles),
+  withConnect,
+  withReduxForm
+)(TaskForm);
