@@ -10,7 +10,8 @@ const renderTextField = ({
   <TextField
     label={label}
     placeholder={label}
-    error={touched && error}
+    error={touched && invalid}
+    helperText={touched && error}
     {...input}
     {...custom}
   />
