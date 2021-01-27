@@ -16,6 +16,7 @@ import {
 import { withStyles } from "@material-ui/styles";
 import { Field, reduxForm } from "redux-form";
 import styles from "./styles";
+import renderTextField from "../../components/FormHelper/TextField";
 
 class TaskForm extends Component {
   onHandleSubmitForm = (data) => {
@@ -29,22 +30,26 @@ class TaskForm extends Component {
       <form onSubmit={handleSubmit(this.onHandleSubmitForm)}>
         <Grid container spacing={8}>
           <Grid item md={12}>
-            <Field name="title" component="input" />
-          </Grid>
-          <Grid item md={12}>
-            <TextField
-              id="standard-password-input"
+            <Field
+              id="title"
               label="Tieu de"
               className={classes.textField}
               margin="normal"
+              name="title"
+              component={renderTextField}
             />
           </Grid>
           <Grid item md={12}>
-            <TextField
-              id="standard-password-input"
+            <Field
+              id="description"
               label="Mo ta"
+              multiple
               className={classes.textField}
               margin="normal"
+              rowsMax="4"
+              margin="normal"
+              name="description"
+              component={renderTextField}
             />
           </Grid>
           <Grid item md={12}>
