@@ -11,6 +11,7 @@ import {
 import {
   addTaskFailed,
   addTaskSuccess,
+  fetchListTask,
   fetchListTaskFailed,
   fetchListTaskSuccess,
   filterTaskSuccess,
@@ -23,9 +24,10 @@ import { hideModal } from "../actions/modal";
 
 function* watchFetchListTaskAction() {
   while (true) {
-    yield take(taskTypes.FETCH_TASK);
+    const action = yield take(taskTypes.FETCH_TASK);
     yield put(showLoading());
-    const resp = yield call(getList);
+    const params = action.payload;
+    const resp = yield call(getList, params);
     const { status, data } = resp;
     if (status === STATUS_CODE.SUCCESS) {
       // dispatch action fetlistTasksucess
@@ -42,13 +44,14 @@ function* watchFetchListTaskAction() {
 function* filterTaskSaga({ payload }) {
   yield delay(500);
   const keyword = payload;
-  const list = yield select((state) => state.task.listTask);
-  const filteredTask =
-    list &&
-    list.filter((task) =>
-      task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase())
-    );
-  yield put(filterTaskSuccess(filteredTask));
+  yield put(fetchListTask({ q:keyword }));
+  // const list = yield select((state) => state.task.listTask);
+  // const filteredTask =
+  //   list &&
+  //   list.filter((task) =>
+  //     task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase())
+  //   );
+  // yield put(filterTaskSuccess(filteredTask));
 }
 
 function* addTaskSaga({ payload }) {
@@ -62,7 +65,7 @@ function* addTaskSaga({ payload }) {
   const { data, status } = resp;
   if (status === STATUS_CODE.CREATED) {
     yield put(addTaskSuccess(data));
-    yield put(hideModal())
+    yield put(hideModal());
   } else {
     yield put(addTaskFailed(data));
   }
