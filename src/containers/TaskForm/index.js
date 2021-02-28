@@ -14,6 +14,7 @@ import {
   Modal,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
+import * as taskActions from "../../actions/task";
 import { Field, reduxForm } from "redux-form";
 import styles from "./styles";
 import renderTextField from "../../components/FormHelper/TextField";
@@ -21,7 +22,11 @@ import validate from "./validate";
 
 class TaskForm extends Component {
   onHandleSubmitForm = (data) => {
-    console.log("data", data);
+    // console.log("data", data);
+    const { taskActionsCreators } = this.props;
+    const { addTask } = taskActionsCreators;
+    const { title, description } = data;
+    addTask(title, description);
   };
 
   require = (value) => {
@@ -40,7 +45,7 @@ class TaskForm extends Component {
     return error;
   };
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const {
       classes,
       modalActions,
@@ -96,6 +101,7 @@ const mapStateToProps = null;
 const mapDispatchToProps = (dispatch) => {
   return {
     modalActions: bindActionCreators(modalActions, dispatch),
+    taskActionsCreators: bindActionCreators(taskActions, dispatch),
   };
 };
 
