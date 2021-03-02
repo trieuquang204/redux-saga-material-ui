@@ -16,10 +16,6 @@ import * as modalActions from "../../../actions/modal";
 import SearchBox from "../../../components/SearchBox";
 
 class TaskBoard extends Component {
-  state = {
-    open: false,
-  };
-
   componentDidMount() {
     const { taskActionCreators } = this.props;
     const { fetchListTask } = taskActionCreators;
@@ -32,14 +28,10 @@ class TaskBoard extends Component {
     fetchListTask();
   };
 
-  handleClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
-
   openform = () => {
-    const { modalActionCreators } = this.props;
+    const { modalActionCreators, taskActionCreators } = this.props;
+    const { setTaskEditing } = taskActionCreators;
+    setTaskEditing(null);
     const {
       showModal,
       changeModalTitle,
@@ -50,14 +42,6 @@ class TaskBoard extends Component {
     changeModalTitle("Them moi cong viec");
     changeModalContent(<TaskForm />);
   };
-
-  // renderForm() {
-  //   const { open } = this.state;
-  //   let xhtml = null;
-  //   xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-  //   return xhtml;
-  // }
-
   showToast = () => {
     toast.success("Thanh cong");
   };
@@ -68,6 +52,22 @@ class TaskBoard extends Component {
     const { filterTask } = taskActionCreators;
     filterTask(value);
   };
+
+  handleEditTask = (task) => {
+    const { taskActionCreators, modalActionCreators } = this.props;
+    const { setTaskEditing } = taskActionCreators;
+    setTaskEditing(task);
+    const {
+      showModal,
+      changeModalTitle,
+      changeModalContent,
+    } = modalActionCreators;
+
+    showModal();
+    changeModalTitle("Cap nha cong viec");
+    changeModalContent(<TaskForm />);
+  };
+
   renderSearchBox = () => {
     let xhtml = null;
     xhtml = <SearchBox handleChange={this.handleFilter} />;
@@ -83,7 +83,12 @@ class TaskBoard extends Component {
           const taskFiltered =
             listTask && listTask.filter((task) => task.status === status.value);
           return (
-            <TaskList tasks={taskFiltered} status={status} key={status.value} />
+            <TaskList
+              tasks={taskFiltered}
+              status={status}
+              key={status.value}
+              onClickEdit={this.handleEditTask}
+            />
           );
         })}
       </Grid>

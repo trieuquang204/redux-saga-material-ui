@@ -4,7 +4,7 @@ import * as taskConstants from "../constants/task";
 export const fetchListTask = (params = {}) => {
   return {
     type: taskConstants.FETCH_TASK,
-    payload: params
+    payload: params,
   };
 };
 
@@ -80,5 +80,12 @@ export const addTaskFailed = (error) => {
   return {
     type: taskConstants.ADD_TASK_FAILED,
     payload: error,
+  };
+};
+
+export const setTaskEditing = (task) => {
+  return {
+    type: taskConstants.SET_TASK_EDITING,
+    payload: task,
   };
 };

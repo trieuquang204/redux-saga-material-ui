@@ -45,13 +45,13 @@ class TaskForm extends Component {
     return error;
   };
   render() {
-    // console.log(this.props);
     const {
       classes,
       modalActions,
       handleSubmit,
       invalid,
       submitting,
+      taskEditing,
     } = this.props;
     const { hideModal } = modalActions;
     return (
@@ -65,6 +65,7 @@ class TaskForm extends Component {
               margin="normal"
               name="title"
               component={renderTextField}
+              value={taskEditing ? taskEditing.title : ""}
             />
           </Grid>
           <Grid item md={12}>
@@ -78,6 +79,7 @@ class TaskForm extends Component {
               margin="normal"
               name="description"
               component={renderTextField}
+              value={taskEditing ? taskEditing.description : ""}
             />
           </Grid>
           <Grid item md={12}>
@@ -96,7 +98,17 @@ class TaskForm extends Component {
   }
 }
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => {
+  return {
+    taskEditing: state.task.taskEditing,
+    initialValues: {
+      title: state.task.taskEditing ? state.task.taskEditing.title : null,
+      description: state.task.taskEditing
+        ? state.task.taskEditing.description
+        : null,
+    },
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

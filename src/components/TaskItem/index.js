@@ -8,12 +8,12 @@ import {
   Typography,
   Grid,
   Fab,
-  Icon
+  Icon,
 } from "@material-ui/core";
 
 class TaskItem extends Component {
   render() {
-    const { classes, task, status } = this.props;
+    const { classes, task, status, onClickEdit } = this.props;
     const { id, title } = task;
     return (
       <Card key={id} className={classes.card}>
@@ -29,15 +29,16 @@ class TaskItem extends Component {
           <p>{task.description}</p>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Fab color="primary" aria-label="Edit" size="small">
-            <Icon fontSize="small">
-              edit_icon
-            </Icon>
+          <Fab
+            color="primary"
+            aria-label="Edit"
+            size="small"
+            onClick={onClickEdit}
+          >
+            <Icon fontSize="small">edit_icon</Icon>
           </Fab>
           <Fab color="primary" aria-label="Delete" size="small">
-            <Icon fontSize="small">
-              delete_icon
-            </Icon>
+            <Icon fontSize="small">delete_icon</Icon>
           </Fab>
         </CardActions>
       </Card>
