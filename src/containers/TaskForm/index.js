@@ -12,6 +12,7 @@ import {
   TextField,
   DialogTitle,
   Modal,
+  MenuItem,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import * as taskActions from "../../actions/task";
@@ -19,6 +20,7 @@ import { Field, reduxForm } from "redux-form";
 import styles from "./styles";
 import renderTextField from "../../components/FormHelper/TextField";
 import validate from "./validate";
+import renderSelectField from "../../components/FormHelper/select";
 
 class TaskForm extends Component {
   onHandleSubmitForm = (data) => {
@@ -44,6 +46,28 @@ class TaskForm extends Component {
     }
     return error;
   };
+
+  renderStatusSelection = () => {
+    let xhtml = null;
+    const { taskEditing, classes } = this.props;
+    if (taskEditing && taskEditing.id) {
+      xhtml = (
+        <Field
+          id="status"
+          label="Trang thai"
+          className={classes.select}
+          name="status"
+          component={renderSelectField}
+        >
+          <MenuItem value={0}>READY</MenuItem>
+          <MenuItem value={1}>IN PROGRESS</MenuItem>
+          <MenuItem value={2}>COMPLETED</MenuItem>
+        </Field>
+      );
+    }
+    return xhtml;
+  };
+
   render() {
     const {
       classes,
@@ -51,7 +75,7 @@ class TaskForm extends Component {
       handleSubmit,
       invalid,
       submitting,
-      taskEditing,
+      // taskEditing,
     } = this.props;
     const { hideModal } = modalActions;
     return (
@@ -65,7 +89,6 @@ class TaskForm extends Component {
               margin="normal"
               name="title"
               component={renderTextField}
-              value={taskEditing ? taskEditing.title : ""}
             />
           </Grid>
           <Grid item md={12}>
@@ -79,8 +102,10 @@ class TaskForm extends Component {
               margin="normal"
               name="description"
               component={renderTextField}
-              value={taskEditing ? taskEditing.description : ""}
             />
+          </Grid>
+          <Grid item md={12}>
+            {this.renderStatusSelection()}
           </Grid>
           <Grid item md={12}>
             <Button
@@ -103,9 +128,11 @@ const mapStateToProps = (state) => {
     taskEditing: state.task.taskEditing,
     initialValues: {
       title: state.task.taskEditing ? state.task.taskEditing.title : null,
+      status: state.task.taskEditing ? state.task.taskEditing.status : null,
       description: state.task.taskEditing
         ? state.task.taskEditing.description
         : null,
+        
     },
   };
 };
