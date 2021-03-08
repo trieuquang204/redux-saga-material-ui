@@ -24,11 +24,14 @@ import renderSelectField from "../../components/FormHelper/select";
 
 class TaskForm extends Component {
   onHandleSubmitForm = (data) => {
-    // console.log("data", data);
-    const { taskActionsCreators } = this.props;
-    const { addTask } = taskActionsCreators;
-    const { title, description } = data;
-    addTask(title, description);
+    const { taskActionsCreators, taskEditing } = this.props;
+    const { addTask, updateTask } = taskActionsCreators;
+    const { title, description, status } = data;
+    if (taskEditing && taskEditing.id) {
+      updateTask(title, description, status);
+    } else {
+      addTask(title, description);
+    }
   };
 
   require = (value) => {
@@ -132,7 +135,6 @@ const mapStateToProps = (state) => {
       description: state.task.taskEditing
         ? state.task.taskEditing.description
         : null,
-        
     },
   };
 };

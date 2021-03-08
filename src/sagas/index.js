@@ -15,8 +15,10 @@ import {
   fetchListTaskFailed,
   fetchListTaskSuccess,
   filterTaskSuccess,
+  updateTaskFailed,
+  updateTaskSuccess,
 } from "../actions/task";
-import { addTask, getList } from "../apis/task";
+import { addTask, getList, updateTask } from "../apis/task";
 import { STATUSES, STATUS_CODE } from "../constants";
 import * as taskTypes from "../constants/task";
 import { showLoading, hideLoading } from "../actions/ui";
@@ -44,7 +46,7 @@ function* watchFetchListTaskAction() {
 function* filterTaskSaga({ payload }) {
   yield delay(500);
   const keyword = payload;
-  yield put(fetchListTask({ q:keyword }));
+  yield put(fetchListTask({ q: keyword }));
   // const list = yield select((state) => state.task.listTask);
   // const filteredTask =
   //   list &&
@@ -72,11 +74,31 @@ function* addTaskSaga({ payload }) {
   yield put(hideLoading());
 }
 
+function* updateTaskSaga({ payload }) {
+  const { title, description, status } = payload;
+  const taskEditing = yield select((state) => state.task.taskEditing);
+  yield put(showLoading());
+  const resp = yield call(
+    updateTask,
+    { title, description, status },
+    taskEditing.id
+  );
+  const { data, status: statusCode } = resp;
+  if (statusCode === STATUS_CODE.SUCCESS) {
+    yield put(updateTaskSuccess(data));
+    yield put(hideModal());
+  } else {
+    yield put(updateTaskFailed(data));
+  }
+  yield put(hideLoading());
+}
+
 // rootsaga la 1 gennerater function
 function* rootSaga() {
   yield fork(watchFetchListTaskAction);
   yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga);
   yield takeEvery(taskTypes.ADD_TASK, addTaskSaga);
+  yield takeLatest(taskTypes.UPDATE_TASK, updateTaskSaga);
 }
 
 export default rootSaga;

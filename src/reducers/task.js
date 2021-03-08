@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
     }
     case taskConstants.ADD_TASK: {
       return {
-        ...state
+        ...state,
       };
     }
     case taskConstants.ADD_TASK_SUCCESS: {
@@ -63,6 +63,31 @@ const reducer = (state = initialState, action) => {
         ...state,
         taskEditing: task,
       };
+    }
+    case taskConstants.UPDATE_TASK: {
+      return {
+        ...state,
+      };
+    }
+    case taskConstants.UPDATE_TASK_SUCCESS: {
+      const { data } = action.payload;
+      const { listTask } = state;
+      const index = listTask.findIndex((item) => item.id === data.id);
+      if (index !== -1) {
+        const newList = [
+          ...listTask.slice(0, index),
+          data,
+          ...listTask(index + 1),
+        ];
+        return {
+          ...state,
+          listTask: newList,
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
     }
     default:
       return state;
