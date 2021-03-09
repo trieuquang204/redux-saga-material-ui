@@ -1,10 +1,11 @@
-const styles = () => ({
+const styles = (theme) => ({
   status: {
-    textAlign: 'center'
+    textAlign: "center",
   },
-  wrapperListTask: {
-    
-  }
-})
+  modalConfirmTextBold: {
+    fontWight: 700,
+  },
+  wrapperListTask: {},
+});
 
 export default styles;

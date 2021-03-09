@@ -68,6 +68,51 @@ class TaskBoard extends Component {
     changeModalContent(<TaskForm />);
   };
 
+  showModalDeleteTask = (task) => {
+    const { taskActionCreators, modalActionCreators, classes } = this.props;
+    const {
+      showModal,
+      changeModalTitle,
+      hideModal,
+      changeModalContent,
+    } = modalActionCreators;
+
+    showModal();
+    changeModalTitle("Xoa cong viec");
+    changeModalContent(
+      <div className={classes.modalDelete}>
+        <div className={classes.modalConfirmText}>
+          Ban chac chan muon xoa{" "}
+          <span
+            style={{ fontWeight: "bold", color: "#000" }}
+            className={classes.modalConfirmTextBold}
+          >
+            {task.title}
+          </span>
+          ?
+        </div>
+        <Box display="flex" flexDirection="row-reverse" mt={2}>
+          <Box ml={1}>
+            <Button variant="contained" onClick={hideModal}>Huy bo</Button>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.handleDeleteTask(task)}
+            >
+              Dong y
+            </Button>
+          </Box>
+        </Box>
+      </div>
+    );
+  };
+
+  handleDeleteTask(task) {
+    console.log("task", task);
+  }
+
   renderSearchBox = () => {
     let xhtml = null;
     xhtml = <SearchBox handleChange={this.handleFilter} />;
@@ -88,6 +133,7 @@ class TaskBoard extends Component {
               status={status}
               key={status.value}
               onClickEdit={this.handleEditTask}
+              onClickDelete={this.showModalDeleteTask}
             />
           );
         })}

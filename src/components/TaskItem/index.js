@@ -13,7 +13,7 @@ import {
 
 class TaskItem extends Component {
   render() {
-    const { classes, task, status, onClickEdit } = this.props;
+    const { classes, task, status, onClickEdit, onClickDelete } = this.props;
     const { id, title } = task;
     return (
       <Card key={id} className={classes.card}>
@@ -37,7 +37,12 @@ class TaskItem extends Component {
           >
             <Icon fontSize="small">edit_icon</Icon>
           </Fab>
-          <Fab color="primary" aria-label="Delete" size="small">
+          <Fab
+            color="primary"
+            aria-label="Delete"
+            size="small"
+            onClick={onClickDelete}
+          >
             <Icon fontSize="small">delete_icon</Icon>
           </Fab>
         </CardActions>
