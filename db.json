@@ -1,16 +1,10 @@
 {
   "tasks": [
     {
-      "title": "quang",
-      "description": "this is Quang",
-      "status": 0,
-      "id": 1
-    },
-    {
-      "title": "test1",
+      "title": "Am nhac",
       "description": "Mo ta am nhac",
-      "status": 2,
-      "id": 2
+      "status": 1,
+      "id": 1
     }
   ]
 }

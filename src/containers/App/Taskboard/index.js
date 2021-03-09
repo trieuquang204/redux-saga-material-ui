@@ -110,7 +110,10 @@ class TaskBoard extends Component {
   };
 
   handleDeleteTask(task) {
-    console.log("task", task);
+    const { id } = task;
+    const { taskActionCreators } = this.props;
+    const { deleteTask } = taskActionCreators;
+    deleteTask(id)
   }
 
   renderSearchBox = () => {

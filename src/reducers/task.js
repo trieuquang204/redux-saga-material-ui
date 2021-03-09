@@ -1,5 +1,5 @@
 import * as taskConstants from "../constants/task";
-import { toastError } from "../helpers/toastHelper";
+import { toastError, toastSuccess } from "../helpers/toastHelper";
 
 const initialState = {
   listTask: [],
@@ -45,6 +45,7 @@ const reducer = (state = initialState, action) => {
     }
     case taskConstants.ADD_TASK_SUCCESS: {
       const data = action.payload;
+      toastSuccess("Them moi cong viec thanh cong");
       return {
         ...state,
         listTask: state.listTask.concat([data]),
@@ -79,6 +80,7 @@ const reducer = (state = initialState, action) => {
           data,
           ...listTask(index + 1),
         ];
+        toastSuccess("Cap nhat cong viec thanh cong");
         return {
           ...state,
           listTask: newList,
@@ -88,6 +90,33 @@ const reducer = (state = initialState, action) => {
           ...state,
         };
       }
+    }
+    case taskConstants.UPDATE_TASK_FAILED: {
+      const error = action.payload;
+      toastError(error);
+      return {
+        ...state,
+      };
+    }
+    case taskConstants.DELETE_TASK: {
+      return {
+        ...state,
+      };
+    }
+    case taskConstants.DELETE_TASK_SUCCESS: {
+      const { data: taskId } = action.payload;
+      toastSuccess("Xoa cong viec thanh cong");
+      return {
+        ...state,
+        listTask: state.listTask.filter((item) => item.id !== taskId),
+      };
+    }
+    case taskConstants.DELETE_TASK_FAILED: {
+      const error = action.payload;
+      toastError(error);
+      return {
+        ...state,
+      };
     }
     default:
       return state;
